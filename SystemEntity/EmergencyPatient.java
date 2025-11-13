@@ -1,11 +1,12 @@
 package SystemEntity;
 
 import SystemHelper.HelperUtils;
+import SystemInterface.Displayable;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public class EmergencyPatient extends InPatient {
+public class EmergencyPatient extends InPatient implements Displayable {
     private String emergencyType;
     private String arrivalMode;
     private int triageLevel;
@@ -33,6 +34,10 @@ public class EmergencyPatient extends InPatient {
         //Calls InPatient's constructor
     }
 
+    public EmergencyPatient() {
+
+    }
+
     public String getEmergencyType() {
         return emergencyType;
     }
@@ -53,7 +58,7 @@ public class EmergencyPatient extends InPatient {
         if (HelperUtils.isNotNull(arrivalMode)) {
             this.arrivalMode = arrivalMode;
         } else {
-            System.out.println("⚠ Invalid arrival mode. Keeping previous value.");
+            System.out.println("Invalid arrival mode. Keeping previous value.");
         }
     }
 
@@ -65,7 +70,7 @@ public class EmergencyPatient extends InPatient {
         if (triageLevel >= 1 && triageLevel <= 5) {
             this.triageLevel = triageLevel;
         } else {
-            System.out.println("⚠ Invalid triage level. Must be between 1–5.");
+            System.out.println("Invalid triage level. Must be between 1–5.");
         }
     }
 
@@ -75,16 +80,6 @@ public class EmergencyPatient extends InPatient {
 
     public void setAdmittedViaER(boolean admittedViaER) {
         this.admittedViaER = admittedViaER;
-    }
-
-    @Override
-    public void displayInfo() {
-        super.displayInfo();
-        System.out.println("----- Emergency Details -----");
-        System.out.println("Emergency Type: " + (HelperUtils.isNotNull(emergencyType) ? emergencyType : "Unknown"));
-        System.out.println("Arrival Mode: " + (HelperUtils.isNotNull(arrivalMode) ? arrivalMode : "Unknown"));
-        System.out.println("Triage Level: " + triageLevel);
-        System.out.println("Admitted via ER: " + (admittedViaER ? "Yes" : "No"));
     }
 
     @Override
@@ -99,8 +94,13 @@ public class EmergencyPatient extends InPatient {
     @Override
     public double calculateTotalCharges() {
         double baseCharges = super.calculateTotalCharges();
-        double emergencyFee = 150.0; // Example fixed emergency handling fee
-        return baseCharges + (admittedViaER ? emergencyFee : 0);
+        if (triageLevel <= 2) {
+            baseCharges += 500;
+        }
+        if ("Ambulance".equalsIgnoreCase(arrivalMode)) {
+            baseCharges += 300;
+        }
+        return baseCharges;
     }
 
     public void prioritizeTreatment() {
@@ -109,5 +109,21 @@ public class EmergencyPatient extends InPatient {
         } else {
             System.out.println("Standard triage level (" + triageLevel + ") assigned for " + getFirstName() + ".");
         }
+    }
+
+    @Override
+    public String displayInfo() {
+        super.displayInfo();
+        System.out.println("----- Emergency Details -----");
+        System.out.println("Emergency Type: " + (HelperUtils.isNotNull(emergencyType) ? emergencyType : "Unknown"));
+        System.out.println("Arrival Mode: " + (HelperUtils.isNotNull(arrivalMode) ? arrivalMode : "Unknown"));
+        System.out.println("Triage Level: " + triageLevel);
+        System.out.println("Admitted via ER: " + (admittedViaER ? "Yes" : "No"));
+        return null;
+    }
+
+    @Override
+    public void displaySummary() {
+        super.displaySummary();
     }
 }
