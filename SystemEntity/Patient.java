@@ -37,6 +37,10 @@ public class Patient extends Person implements Displayable {
         //Calls Person's constructor
     }
 
+    public Patient() {
+
+    }
+
     public String getPatientId() {
         return patientId;
     }
@@ -141,7 +145,7 @@ public class Patient extends Person implements Displayable {
     }
 
     @Override
-    public void displayInfo() {
+    public String displayInfo() {
         super.displayInfo();
         System.out.println("----- Patient Information -----");
         System.out.println("Patient ID: " + patientId);
@@ -153,6 +157,7 @@ public class Patient extends Person implements Displayable {
         System.out.println("Medical Records: " + ((medicalRecords == null || medicalRecords.isEmpty()) ? "No records" : medicalRecords));
         System.out.println("Appointments: " + ((appointments == null || appointments.isEmpty()) ? "No appointments" : appointments));
 
+        return null;
     }
     // Update phone only
     public void updateContact(String phone) {
