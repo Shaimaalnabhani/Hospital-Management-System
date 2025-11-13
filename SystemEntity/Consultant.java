@@ -1,11 +1,12 @@
 package SystemEntity;
 
 import SystemHelper.HelperUtils;
+import SystemInterface.Displayable;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public class Consultant extends Doctor {
+public class Consultant extends Doctor implements Displayable {
 
     private List<String> consultationTypes;
     private boolean onlineConsultationAvailable;
@@ -30,15 +31,19 @@ public class Consultant extends Doctor {
         //Calls Doctor's constructor
     }
 
+    public Consultant() {
+
+    }
+
     public List<String> getConsultationTypes() {
         return consultationTypes;
     }
 
     public void setConsultationTypes(List<String> consultationTypes) {
-        if (HelperUtils.isNotNull(consultationTypes)) {
-            this.consultationTypes = consultationTypes;
+        if (HelperUtils.isNull(consultationTypes) || consultationTypes.isEmpty()) {
+            System.out.println("Consultation types cannot be null or empty.");
         } else {
-            System.out.println("Warning: Consultation types cannot be null.");
+            this.consultationTypes = consultationTypes;
         }
     }
 
@@ -61,16 +66,6 @@ public class Consultant extends Doctor {
             System.out.println("Invalid consultation duration. Must be positive.");
         }
     }
-
-    @Override
-    public void displayInfo() {
-        super.displayInfo();
-        System.out.println("Consultation Types: " +
-                (HelperUtils.isNull(consultationTypes) || consultationTypes.isEmpty() ? "None" : String.join(", ", consultationTypes)));
-        System.out.println("Online Consultation Available: " + (onlineConsultationAvailable ? "Yes" : "No"));
-        System.out.println("Consultation Duration: " + consultationDuration + " minutes");
-    }
-
     public void scheduleConsultation(String type, String patientId, String slot) {
         if (HelperUtils.isNull(type) || HelperUtils.isNull(patientId) || HelperUtils.isNull(slot)) {
             System.out.println("Invalid input — cannot schedule consultation.");
@@ -94,5 +89,21 @@ public class Consultant extends Doctor {
         }
         System.out.println("Consultant " + getDoctorId() + " provided a second opinion for patient " + patientId);
         System.out.println("Notes: " + notes);
+    }
+
+    @Override
+    public String displayInfo() {
+        super.displayInfo();
+        System.out.println("Consultant Details:");
+        System.out.println("Consultation Types: " +
+                (HelperUtils.isNull(consultationTypes) || consultationTypes.isEmpty() ? "None" : String.join(", ", consultationTypes)));
+        System.out.println("Online Consultation Available: " + (onlineConsultationAvailable ? "Yes" : "No"));
+        System.out.println("Consultation Duration: " + consultationDuration + " minutes");
+        return null;
+    }
+
+    @Override
+    public void displaySummary() {
+        super.displaySummary();
     }
 }
