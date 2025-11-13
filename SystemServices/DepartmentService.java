@@ -1,6 +1,7 @@
 package SystemServices;
 
 import SystemEntity.Department;
+import SystemHelper.HelperUtils;
 import SystemInterface.Manageable;
 import SystemInterface.Searchable;
 
@@ -11,8 +12,12 @@ public class DepartmentService implements Manageable, Searchable {
     private static List<Department> departmentList = new ArrayList<>();
 
     public static void addDepartment(Department department) {
-        departmentList.add(department);
-        System.out.println("Department " + department.getDepartmentId() + " added successfully.");
+        if (HelperUtils.isNotNull(department)) {
+            departmentList.add(department);
+            System.out.println("Department " + department.getDepartmentId() + " added successfully");
+        } else {
+            System.out.println("Can't add department");
+        }
     }
 
     public static void editDepartment(String departmentId, Department updatedDepartment) {
@@ -81,27 +86,80 @@ public class DepartmentService implements Manageable, Searchable {
     }
 
     @Override
-    public void add(Object entity) {
-
+    public String add(Object entity) {
+        if (entity instanceof Department) {
+            departmentList.add((Department) entity);
+            return "Department added successfully!";
+        }
+        return "Invalid entity type.";
     }
 
     @Override
-    public boolean remove(String id) {
-        return false;
+    public String remove(String id) {
+        Department department = getDepartmentById(id);
+        if (HelperUtils.isNotNull(department)) {
+            departmentList.remove(department);
+            return "Department with ID " + id + " removed successfully!";
+        }
+        return "Department not found.";
     }
 
     @Override
-    public List<Object> getAll() {
-        return List.of();
+    public String getAll() {
+        if (departmentList.isEmpty()) {
+            return "No departments available.";
+        }
+        StringBuilder sb = new StringBuilder("===== Department List =====\n");
+        for (Department department : departmentList) {
+            sb.append(department.displayInfo(""));
+            sb.append(System.lineSeparator());
+            sb.append("---------------------------\n");
+        }
+        return sb.toString();    }
+
+    @Override
+    public String search(String keyword) {
+        StringBuilder sb = new StringBuilder();
+        for (Department d : departmentList) {
+            if (d.getDepartmentName().toLowerCase().contains(keyword.toLowerCase())) {
+                sb.append(d.displayInfo(""));
+                sb.append(System.lineSeparator());
+            }
+        }
+        return sb.length() > 0 ? sb.toString() : "No departments found for: " + keyword;
     }
 
     @Override
-    public List<Object> search(String keyword) {
-        return List.of();
+    public String searchById(String id) {
+        Department dept = getDepartmentById(id);
+        if (HelperUtils.isNotNull(dept)) {
+            return dept.displayInfo("");
+        }
+        return "Department not found: " + id;
+    }
+    public static void addSampleDepartments() {
+        String[] departmentNames = {"Cardiology", "Orthopedics",
+                "Neurology", "Gastroenterology",
+                "Endocrinology", "Pulmonology",
+                "Nephrology", "Oncology",
+                "Dermatology", "Psychiatry",
+                "Pediatrics", "Geriatrics",
+                "General Surgery", "Emergency",
+                "Trauma Center", "Pharmacy",
+                "Physiotherapy",
+        };
+        for (int i = 0; i < 4; i++) {
+            Department department = new Department();
+            department.setDepartmentName(departmentNames[i]);
+            department.setHeadDoctorId("DR-123" + i);
+            department.setDoctors(new ArrayList<>());
+            department.setNurses(new ArrayList<>());
+            department.setBedCapacity(50);
+            department.setAvailableBeds(30);
+            departmentList.add(department);
+
+        }
     }
 
-    @Override
-    public Object searchById(String id) {
-        return null;
-    }
+
 }
