@@ -82,7 +82,7 @@ public class Appointment implements Displayable {
         if (HelperUtils.isNotNull(appointmentDate)) {
             this.appointmentDate = appointmentDate;
         } else {
-            System.out.println("⚠ Invalid Appointment Date.");
+            System.out.println("Invalid Appointment Date.");
         }
     }
 
@@ -94,7 +94,7 @@ public class Appointment implements Displayable {
         if (HelperUtils.isValidString(appointmentTime)) {
             this.appointmentTime = appointmentTime;
         } else {
-            System.out.println("⚠ Invalid Appointment Time.");
+            System.out.println("Invalid Appointment Time.");
         }
     }
 
@@ -133,6 +133,7 @@ public class Appointment implements Displayable {
             this.notes = "";
         }
     }
+
     public void displayInfo() {
         System.out.println("----- Appointment -----");
         System.out.println("Appointment ID: " + appointmentId);
@@ -143,11 +144,6 @@ public class Appointment implements Displayable {
         System.out.println("Status: " + status);
         System.out.println("Reason: " + reason);
         System.out.println("Notes: " + (HelperUtils.isValidString(notes) ? notes : "None"));
-    }
-
-    @Override
-    public void displaySummary() {
-        System.out.println("Appointment " + appointmentId + " | " + status + " | " + appointmentDate);
     }
 
     public void reschedule(LocalDate newDate, String newTime) {
@@ -161,15 +157,26 @@ public class Appointment implements Displayable {
         }
     }
 
-    public void cancel() {
+    public boolean cancel() {
+        if ("Cancelled".equalsIgnoreCase(this.status)) {
+            System.out.println("Appointment is already cancelled.");
+            return false;
+        }
         this.status = "Cancelled";
-        System.out.println("Appointment " + appointmentId + " has been cancelled.");
+        System.out.println("Appointment cancelled.");
+        return true;
     }
 
-    public void complete() {
+    public boolean complete() {
+        if ("Completed".equalsIgnoreCase(this.status)) {
+            System.out.println("Appointment is already completed.");
+            return false;
+        }
         this.status = "Completed";
-        System.out.println("Appointment " + appointmentId + " has been completed.");
+        System.out.println("Appointment marked as completed.");
+        return true;
     }
+
     // Add notes only
     public void addNotes(String notes) {
         if (HelperUtils.isValidString(notes)) {
@@ -194,5 +201,23 @@ public class Appointment implements Displayable {
             this.notes = (HelperUtils.isNull(this.notes) ? "" : this.notes + "\n") + entry;
             System.out.println("Notes added by " + addedBy + " on " + timestamp + ": " + notes);
         }
+    }
+
+    @Override
+    public String displayInfo(String str) {
+        System.out.println("Appointment Id: " + appointmentId);
+        System.out.println("Patient Id: " + patientId);
+        System.out.println("Doctor Id: " + doctorId);
+        System.out.println("Appointment Date: " + appointmentDate);
+        System.out.println("Appointment Time: " + appointmentTime);
+        System.out.println("Status: " + status);
+        System.out.println("Reason: " + reason);
+        System.out.println("Notes: " + notes);
+        return "";
+    }
+
+    @Override
+    public String displaySummary(String str) {
+        return "Appointment{" + ", patientId='" + patientId + '\'' + ", doctorId='" + doctorId + '\'' + ", appointmentDate=" + appointmentDate + ", appointmentTime='" + appointmentTime + '\'' + ", status='" + status + '\'' + '}';
     }
 }
