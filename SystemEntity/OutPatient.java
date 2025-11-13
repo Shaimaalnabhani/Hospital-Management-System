@@ -25,6 +25,10 @@ public class OutPatient extends Patient {
         //Calls Patient's constructor
     }
 
+    public OutPatient() {
+
+    }
+
     public int getVisitCount() {
         return visitCount;
     }
@@ -62,12 +66,13 @@ public class OutPatient extends Patient {
     }
 
     @Override
-    public void displayInfo() {
+    public String displayInfo() {
         super.displayInfo();
         System.out.println("----- OutPatient Details -----");
         System.out.println("Visit Count: " + visitCount);
         System.out.println("Last Visit Date: " + (HelperUtils.isNotNull(lastVisitDate) ? lastVisitDate : "N/A"));
         System.out.println("Preferred Doctor ID: " + (HelperUtils.isNotNull(preferredDoctorId) ? preferredDoctorId : "Not assigned"));
+        return null;
     }
 
     public void scheduleFollowUp(LocalDate followUpDate) {
