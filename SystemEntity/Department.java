@@ -27,6 +27,10 @@ public class Department implements Displayable {
         System.out.println("Department constructor called.");
     }
 
+    public Department() {
+
+    }
+
     public String getDepartmentId() {
         return departmentId;
     }
@@ -111,22 +115,6 @@ public class Department implements Displayable {
         }
     }
 
-    public void displayInfo() {
-        System.out.println("----- Department Information -----");
-        System.out.println("Department ID: " + departmentId);
-        System.out.println("Name: " + departmentName);
-        System.out.println("Head Doctor ID: " + headDoctorId);
-        System.out.println("Doctors: " + (HelperUtils.isNull(doctors) || doctors.isEmpty() ? "None" : doctors));
-        System.out.println("Nurses: " + (HelperUtils.isNull(nurses) || nurses.isEmpty() ? "None" : nurses));
-        System.out.println("Bed Capacity: " + bedCapacity);
-        System.out.println("Available Beds: " + availableBeds);
-    }
-
-    @Override
-    public void displaySummary() {
-        System.out.println(departmentName + " (" + departmentId + ") - Beds: " + availableBeds + "/" + bedCapacity);
-    }
-
     public void assignDoctor(String doctorId) {
         if (HelperUtils.isNull(doctors)) {
             doctors = new ArrayList<>();
@@ -167,5 +155,36 @@ public class Department implements Displayable {
         else {
             System.out.println("Invalid bed count (must be 0–" + bedCapacity + ").");
         }
+    }
+    @Override
+    public String displayInfo(String prefix) {
+        return prefix +
+                "Department ID: " + departmentId + System.lineSeparator()
+                + "Department Name: " + departmentName + System.lineSeparator()
+                + "Head Doctor ID: " + headDoctorId + System.lineSeparator()
+                + "Number of Doctors: " + (HelperUtils.isNotNull(doctors) ? doctors.size() : 0) + System.lineSeparator()
+                + "Number of Nurses: " + (HelperUtils.isNotNull(nurses) ? nurses.size() : 0) + System.lineSeparator()
+                + "Bed Capacity: " + bedCapacity + System.lineSeparator()
+                + "Available Beds: " + availableBeds;
+    }
+
+    @Override
+    public String displayInfo() {
+        return "";
+    }
+
+    @Override
+    public String displaySummary(String str) {
+        return "Department Id: " + departmentId + " - Department Name: " + departmentName;
+    }
+
+    @Override
+    public void displaySummary() {
+    }
+
+    @Override
+    public String toString() {
+        return "departmentId='" + departmentId + '\'' +
+                ", departmentName='" + departmentName + "\n";
     }
 }
