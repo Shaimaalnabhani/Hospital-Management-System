@@ -30,6 +30,10 @@ public class Nurse extends Person {
         //Calls Person's constructor
     }
 
+    public Nurse() {
+
+    }
+
     public String getNurseId() {
         return nurseId;
     }
@@ -129,7 +133,7 @@ public class Nurse extends Person {
     }
 
     @Override
-    public void displayInfo() {
+    public String displayInfo() {
         super.displayInfo();
         System.out.println("----- Nurse Information -----");
         System.out.println("Nurse ID: " + nurseId);
@@ -137,5 +141,6 @@ public class Nurse extends Person {
         System.out.println("Shift: " + (HelperUtils.isNull(shift) ? "Not Set" : shift));
         System.out.println("Qualification: " + (HelperUtils.isNull(qualification) ? "Not Provided" : qualification));
         System.out.println("Assigned Patients: " + (assignedPatients.isEmpty() ? "None" : assignedPatients));
+        return null;
     }
 }
