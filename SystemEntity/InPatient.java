@@ -36,6 +36,10 @@ public class InPatient extends Patient implements Displayable, Billable {
         //Calls Patient's constructor
     }
 
+    public InPatient() {
+        super();
+    }
+
     public LocalDate getAdmissionDate() {
         return admissionDate;
     }
@@ -103,7 +107,7 @@ public class InPatient extends Patient implements Displayable, Billable {
     }
 
     @Override
-    public void displayInfo() {
+    public String displayInfo() {
         super.displayInfo();
         System.out.println("----- InPatient Details -----");
         System.out.println("Admission Date: " + (HelperUtils.isNotNull(admissionDate) ? admissionDate : "N/A"));
@@ -115,6 +119,7 @@ public class InPatient extends Patient implements Displayable, Billable {
         System.out.println("Stay Duration: " + calculateStayDuration() + " days");
         System.out.println("Total Charges: " + calculateTotalCharges());
 
+        return null;
     }
     public long calculateStayDuration() {
         if (HelperUtils.isNull(admissionDate) || HelperUtils.isNull(dischargeDate)) {
