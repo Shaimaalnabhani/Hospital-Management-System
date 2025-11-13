@@ -30,6 +30,10 @@ public class Person implements Displayable {
         System.out.println("Person constructor called.");
     }
 
+    public Person() {
+
+    }
+
     public String getId() {
         return id;
     }
@@ -134,20 +138,20 @@ public class Person implements Displayable {
         }
     }
 
-    public void displayInfo() {
-        System.out.println("----- Person Information -----");
-        System.out.println("ID: " + id);
-        System.out.println("Name: " + firstName + " " + lastName);
-        System.out.println("Date of Birth: " + HelperUtils.formatDate(dateOfBirth));
-        System.out.println("Gender: " + gender);
-        System.out.println("Phone: " + phoneNumber);
-        System.out.println("Email: " + email);
-        System.out.println("Address: " + address);
+    public String displayInfo(String str) {
+        String info = "ID: " + id + System.lineSeparator()
+                + "Name: " + firstName + " " + lastName + System.lineSeparator()
+                + "Date of Birth: " + dateOfBirth + System.lineSeparator()
+                + "Gender: " + gender + System.lineSeparator()
+                + "Phone: " + phoneNumber + System.lineSeparator()
+                + "Email: " + email + System.lineSeparator()
+                + "Address: " + address;
+        return info;
     }
 
     @Override
-    public void displaySummary() {
-        System.out.println(firstName + " " + lastName + " (" + gender + ")");
+    public String displaySummary(String str) {
+        return id + " - " + firstName + " " + lastName;
     }
 
     @Override
