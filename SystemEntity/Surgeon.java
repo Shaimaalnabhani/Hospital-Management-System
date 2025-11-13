@@ -27,6 +27,10 @@ public class Surgeon extends Doctor {
         //Calls Doctor's constructor
     }
 
+    public Surgeon() {
+
+    }
+
     public int getSurgeriesPerformed() {
         return surgeriesPerformed;
     }
@@ -62,11 +66,12 @@ public class Surgeon extends Doctor {
     }
 
     @Override
-    public void displayInfo() {
+    public String displayInfo() {
         super.displayInfo();
         System.out.println("Surgeries Performed: " + surgeriesPerformed);
         System.out.println("Surgery Types: " + surgeryTypes);
         System.out.println("Operation Theatre Access: " + operationTheatreAccess);
+        return null;
     }
 
     public void performSurgery(String surgeryType) {
