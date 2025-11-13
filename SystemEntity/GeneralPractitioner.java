@@ -1,11 +1,12 @@
 package SystemEntity;
 
 import SystemHelper.HelperUtils;
+import SystemInterface.Displayable;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public class GeneralPractitioner extends Doctor {
+public class GeneralPractitioner extends Doctor implements Displayable {
 
     private boolean walkInAvailable;
     private boolean homeVisitAvailable;
@@ -33,6 +34,10 @@ public class GeneralPractitioner extends Doctor {
         //Calls Doctor's constructor
     }
 
+    public GeneralPractitioner() {
+
+    }
+
     public boolean isWalkInAvailable() {
         return walkInAvailable;
     }
@@ -57,13 +62,6 @@ public class GeneralPractitioner extends Doctor {
         this.vaccinationCertified = vaccinationCertified;
     }
 
-    @Override
-    public void displayInfo() {
-        super.displayInfo();
-        System.out.println("Walk-in Available: " + (walkInAvailable ? "Yes" : "No"));
-        System.out.println("Home Visit Available: " + (homeVisitAvailable ? "Yes" : "No"));
-        System.out.println("Vaccination Certified: " + (vaccinationCertified ? "Yes" : "No"));
-    }
     public void scheduleHomeVisit(String patientId, String dateTime) {
         if (!homeVisitAvailable) {
             System.out.println("Home visits are not available for this GP.");
@@ -90,5 +88,17 @@ public class GeneralPractitioner extends Doctor {
         }
         System.out.println("Administered " + vaccineName + " vaccine to patient " + patientId);
     }
+    @Override
+    public String displayInfo() {
+        super.displayInfo();
+        System.out.println("Walk-in Available: " + (walkInAvailable ? "Yes" : "No"));
+        System.out.println("Home Visit Available: " + (homeVisitAvailable ? "Yes" : "No"));
+        System.out.println("Vaccination Certified: " + (vaccinationCertified ? "Yes" : "No"));
+        return null;
+    }
 
+    @Override
+    public void displaySummary() {
+        super.displaySummary();
+    }
 }
