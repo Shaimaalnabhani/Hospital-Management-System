@@ -15,6 +15,7 @@ public class Doctor extends Person implements Displayable {
     private String departmentId;
     private double consultationFee;
     private List<String> availableSlots;
+    private boolean available = false;
     private List<String> assignedPatients;
 
     /*
@@ -37,6 +38,10 @@ public class Doctor extends Person implements Displayable {
         this.assignedPatients = HelperUtils.isNotNull(assignedPatients) ? assignedPatients : new ArrayList<>();
 
         System.out.println("Doctor constructor called. ID: " + doctorId);
+    }
+
+    public Doctor() {
+        super();
     }
     //Calls Person's constructor
 
@@ -199,27 +204,20 @@ public class Doctor extends Person implements Displayable {
         }
     }
 
-    @Override
-    public void displayInfo() {
-        super.displayInfo();
-        System.out.println("----- Doctor Information -----");
-        System.out.println("Doctor ID: " + doctorId);
-        System.out.println("Specialization: " + specialization);
-        System.out.println("Qualification: " + qualification);
-        System.out.println("Experience: " + experienceYears + " years");
-        System.out.println("Department ID: " + departmentId);
-        System.out.println("Consultation Fee: $" + consultationFee);
-        System.out.println("Available Slots: " + (HelperUtils.isNull(availableSlots) || availableSlots.isEmpty() ? "None" : availableSlots));
-        System.out.println("Assigned Patients: " + (HelperUtils.isNull(assignedPatients) || assignedPatients.isEmpty() ? "None" : assignedPatients));
-    }
+//    @Override
+//    public void displayInfo() {
+//        super.displayInfo();
+//        System.out.println("----- Doctor Information -----");
+//        System.out.println("Doctor ID: " + doctorId);
+//        System.out.println("Specialization: " + specialization);
+//        System.out.println("Qualification: " + qualification);
+//        System.out.println("Experience: " + experienceYears + " years");
+//        System.out.println("Department ID: " + departmentId);
+//        System.out.println("Consultation Fee: $" + consultationFee);
+//        System.out.println("Available Slots: " + (HelperUtils.isNull(availableSlots) || availableSlots.isEmpty() ? "None" : availableSlots));
+//        System.out.println("Assigned Patients: " + (HelperUtils.isNull(assignedPatients) || assignedPatients.isEmpty() ? "None" : assignedPatients));
+//    }
 
-    @Override
-    public void displaySummary() {
-        System.out.println("Dr. " + getFirstName() + " " + getLastName() +
-                " | " + specialization +
-                " | Exp: " + experienceYears + " yrs" +
-                " | Fee: $" + consultationFee);
-    }
 
     // Update only the fee
     public void updateFee(double fee) {
@@ -239,5 +237,29 @@ public class Doctor extends Person implements Displayable {
         } else {
             System.out.println("Invalid fee value.");
         }
+    }
+
+    @Override
+    public String displayInfo() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(super.displayInfo(""));
+        sb.append(System.lineSeparator());
+        sb.append("Doctor ID: ").append(doctorId).append(System.lineSeparator());
+        sb.append("Specialization: ").append(specialization).append(System.lineSeparator());
+        sb.append("Qualification: ").append(qualification).append(System.lineSeparator());
+        sb.append("Experience Years: ").append(experienceYears).append(System.lineSeparator());
+        sb.append("Department Id: ").append(departmentId).append(System.lineSeparator());
+        sb.append("Consultation Fee: ").append(consultationFee).append(System.lineSeparator());
+        sb.append("Available: ").append(available).append(System.lineSeparator());
+        sb.append("Available Slots: ").append(HelperUtils.isNotNull(availableSlots) ? availableSlots.toString() : "[]").append(System.lineSeparator());
+        sb.append("Assigned Patients: ").append(HelperUtils.isNotNull(assignedPatients) ? assignedPatients.toString() : "[]").append(System.lineSeparator());
+        String out = sb.toString();
+        System.out.println(out);
+        return out;
+    }
+
+    @Override
+    public String displaySummary(String str) {
+        return "Doctor{" + getDoctorId() + ": " + getFirstName() + " " + getLastName() + "}";
     }
 }
