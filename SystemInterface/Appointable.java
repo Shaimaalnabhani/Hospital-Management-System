@@ -6,8 +6,9 @@ import java.time.LocalDate;
 
 public interface Appointable {
 
-  boolean  scheduleAppointment(Appointment appointment);
-  boolean  cancelAppointment(String appointmentId);
-  boolean  rescheduleAppointment(String appointmentId, LocalDate newDate);
+  void scheduleAppointment(Appointment appointment);
 
+  void scheduleAppointment(String appointmentId, LocalDate newDate);
+
+  boolean cancelAppointment(String appointmentId);
 }
