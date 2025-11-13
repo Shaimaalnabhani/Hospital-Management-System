@@ -1,10 +1,11 @@
 package SystemEntity;
 
 import SystemHelper.HelperUtils;
+import SystemInterface.Displayable;
 
 import java.time.LocalDate;
 
-public class MedicalRecord {
+public class MedicalRecord implements Displayable {
     private String recordId;
     private String patientId;
     private String doctorId;
@@ -26,6 +27,10 @@ public class MedicalRecord {
 
 
         System.out.println("MedicalRecord constructor called.");
+    }
+
+    public MedicalRecord() {
+
     }
 
     public String getRecordId() {
@@ -136,4 +141,25 @@ public class MedicalRecord {
         System.out.println("Notes: " + notes);
     }
 
+    @Override
+    public String displayInfo(String str) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Record Id: ").append(recordId).append(System.lineSeparator());
+        sb.append("Patient Id: ").append(patientId).append(System.lineSeparator());
+        sb.append("Doctor Id: ").append(doctorId).append(System.lineSeparator());
+        sb.append("Visit Date: ").append(visitDate).append(System.lineSeparator());
+        sb.append("Diagnosis: ").append(diagnosis).append(System.lineSeparator());
+        sb.append("Prescription: ").append(prescription).append(System.lineSeparator());
+        sb.append("Test Results: ").append(testResults).append(System.lineSeparator());
+        sb.append("Notes: ").append(notes).append(System.lineSeparator());
+
+        String out = sb.toString();
+        System.out.println(out);
+        return out;
+    }
+
+    @Override
+    public String displaySummary(String str) {
+        return "MedicalRecord{" + recordId + ", Patient:" + patientId + ", Date:" + visitDate + "}";
+    }
 }
